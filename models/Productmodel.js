@@ -74,5 +74,5 @@ const productSchema=new mongoose.Schema({
         default:Date.now
     }
 })
-const productmodel=mongoose.model("Product",productSchema)
-export default productmodel;
+const Product=mongoose.model("Product",productSchema)
+export default Product;
