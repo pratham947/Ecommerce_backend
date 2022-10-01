@@ -40,7 +40,7 @@ app.use("/api/order", Order);
 app.use("/api/cart", Cart);
 app.use("/api/promo", Promo);
  
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 4000 , () => {
   console.log("server is running at port 4000");
 });
     

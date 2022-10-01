@@ -35,7 +35,12 @@ export const addItems = async (req, res) => {
       });
     } else {
       findingCart.Products.push(productobj);
-      findingCart.save();
+      let carttotal=0;
+      findingCart.Products.forEach((product)=>{
+        carttotal=carttotal + product.producttotal
+      })
+      findingCart.carttotal=carttotal
+      findingCart.save(); 
       res.status(200).json({
         success: true,
         findingCart,
@@ -66,6 +71,11 @@ export const removeItems = async (req, res) => {
     );
     if (findIndex >= 0) {
       user.Products.splice(findIndex, 1);
+      let carttotal=0;
+      user.Products.forEach((product)=>{
+        carttotal=carttotal + product.producttotal
+      })
+      user.carttotal=carttotal
       user.save();
       res.status(200).json({
         success: true,
@@ -87,7 +97,7 @@ export const getCartItems = async (req, res) => {
   if (items) {
     return res.status(200).json({
       success: true,
-      items: items.Products,
+      items: items,
     });
   }
   else{
@@ -97,3 +107,16 @@ export const getCartItems = async (req, res) => {
     })
   }
 };
+
+
+export const addPromoCart=async(req,res)=>{
+  const { token,cartprice } = req.body;
+  const data = jwt.verify(token, process.env.JWT_SECRET);
+  const items = await Cart.findOne({ user: data.id });
+  items.carttotal=cartprice;
+  items.save();
+  res.status(200).json({
+    success:true,
+    newprice:items.carttotal
+  })
+}

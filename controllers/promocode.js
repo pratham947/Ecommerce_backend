@@ -14,10 +14,11 @@ export const promoCode = async (req, res) => {
     const Createpromo = await Promocode(req.body);
     try {
       if (Createpromo) {
-        Createpromo.save();
+        const promo=await Createpromo.save();
         res.status(200).json({
           success: true,
           Createpromo,
+          promo  
         });
       }
     } catch (error) {

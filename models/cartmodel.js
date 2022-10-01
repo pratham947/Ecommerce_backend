@@ -37,6 +37,10 @@ const cartSchema=new mongoose.Schema({
       }
     }
   ],
+  carttotal:{
+    type:Number,
+    required:true
+  }
 })
 const Cart=mongoose.model("Cart",cartSchema)
 export default Cart;
